@@ -1,0 +1,127 @@
+   1               		.file	"main.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               	.global	init_adc
+  18               	init_adc:
+  19               	.LFB2:
+  20               	.LM1:
+  21               	/* prologue: function */
+  22               	/* frame size = 0 */
+  23               	.LM2:
+  24 0000 3E98      		cbi 39-32,6
+  25               	.LM3:
+  26 0002 3F98      		cbi 39-32,7
+  27               	.LM4:
+  28 0004 329A      		sbi 38-32,2
+  29               	.LM5:
+  30 0006 3098      		cbi 38-32,0
+  31               	.LM6:
+  32 0008 3198      		cbi 38-32,1
+  33               	.LM7:
+  34 000a 379A      		sbi 38-32,7
+  35               	/* epilogue start */
+  36               	.LM8:
+  37 000c 0895      		ret
+  38               	.LFE2:
+  40               	.global	adc_read4
+  42               	adc_read4:
+  43               	.LFB3:
+  44               	.LM9:
+  45               	/* prologue: function */
+  46               	/* frame size = 0 */
+  47               	.LM10:
+  48 000e 87B1      		in r24,39-32
+  49 0010 807C      		andi r24,lo8(-64)
+  50 0012 87B9      		out 39-32,r24
+  51               	.LM11:
+  52 0014 3A9A      		sbi 39-32,2
+  53               	.LM12:
+  54 0016 369A      		sbi 38-32,6
+  55               	.L4:
+  56               	.LM13:
+  57 0018 3699      		sbic 38-32,6
+  58 001a 00C0      		rjmp .L4
+  59               	.LM14:
+  60 001c 24B1      		in r18,36-32
+  61 001e 35B1      		in r19,(36)+1-32
+  62               	.LM15:
+  63 0020 C901      		movw r24,r18
+  64               	/* epilogue start */
+  65 0022 0895      		ret
+  66               	.LFE3:
+  68               	.global	main
+  70               	main:
+  71               	.LFB4:
+  72               	.LM16:
+  73               	/* prologue: function */
+  74               	/* frame size = 0 */
+  75               	.LM17:
+  76 0024 00D0      		rcall init_adc
+  77               	.LM18:
+  78 0026 B99A      		sbi 55-32,1
+  79               	.LM19:
+  80 0028 8FEF      		ldi r24,lo8(511)
+  81 002a 91E0      		ldi r25,hi8(511)
+  82 002c 9BBD      		out (74)+1-32,r25
+  83 002e 8ABD      		out 74-32,r24
+  84               	.LM20:
+  85 0030 8FB5      		in r24,79-32
+  86 0032 8068      		ori r24,lo8(-128)
+  87 0034 8FBD      		out 79-32,r24
+  88               	.LM21:
+  89 0036 8FB5      		in r24,79-32
+  90 0038 8360      		ori r24,lo8(3)
+  91 003a 8FBD      		out 79-32,r24
+  92               	.LM22:
+  93 003c 8EB5      		in r24,78-32
+  94 003e 8260      		ori r24,lo8(2)
+  95 0040 8EBD      		out 78-32,r24
+  96               	.L8:
+  97               	.LM23:
+  98 0042 00D0      		rcall adc_read4
+  99               	.LM24:
+ 100 0044 A0E0      		ldi r26,lo8(0)
+ 101 0046 B0E0      		ldi r27,hi8(0)
+ 102               	.LVL0:
+ 103 0048 BC01      		movw r22,r24
+ 104 004a CD01      		movw r24,r26
+ 105               	.LVL1:
+ 106 004c 00D0      		rcall __floatunsisf
+ 107               	.LVL2:
+ 108 004e 20E0      		ldi r18,lo8(0x3a800000)
+ 109 0050 30E0      		ldi r19,hi8(0x3a800000)
+ 110 0052 40E8      		ldi r20,hlo8(0x3a800000)
+ 111 0054 5AE3      		ldi r21,hhi8(0x3a800000)
+ 112 0056 00D0      		rcall __mulsf3
+ 113 0058 20E0      		ldi r18,lo8(0x43ff0000)
+ 114 005a 30E0      		ldi r19,hi8(0x43ff0000)
+ 115 005c 4FEF      		ldi r20,hlo8(0x43ff0000)
+ 116 005e 53E4      		ldi r21,hhi8(0x43ff0000)
+ 117 0060 00D0      		rcall __mulsf3
+ 118 0062 00D0      		rcall __fixsfsi
+ 119 0064 7BBD      		out (74)+1-32,r23
+ 120 0066 6ABD      		out 74-32,r22
+ 121 0068 00C0      		rjmp .L8
+ 122               	.LFE4:
+ 164               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:2      *ABS*:0000003f __SREG__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:3      *ABS*:0000003e __SP_H__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:4      *ABS*:0000003d __SP_L__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:5      *ABS*:00000034 __CCP__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:18     .text:00000000 init_adc
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:42     .text:0000000e adc_read4
+C:\Users\Utsob\AppData\Local\Temp/ccdFsVPu.s:70     .text:00000024 main
+
+UNDEFINED SYMBOLS
+__floatunsisf
+__mulsf3
+__fixsfsi
